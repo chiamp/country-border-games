@@ -11,3 +11,4 @@ Guess the countries:
 Guess the provinces/states/regions:
 * [Canada](https://html-preview.github.io/?url=https://github.com/chiamp/country-border-games/blob/master/canada.html)
 * [China](https://html-preview.github.io/?url=https://github.com/chiamp/country-border-games/blob/master/china.html)
+* [United Kingdom](https://html-preview.github.io/?url=https://github.com/chiamp/country-border-games/blob/master/united_kingdom.html)
