@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Image Viewer</title>
+    <style>
+        /* Simple styling */
+        #image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 45%;
+            height: auto;
+            border: 2px solid #ddd;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <button onclick="showRandomImage()">Show Random Border</button>
+        <button onclick="replaceCurrentImage()">Show Answer</button>
+    </div>
+
+    <div id="image-container">
+        <img id="displayed-image" src="" alt="Click a button to view a random image">
+    </div>
+
+    <div id="filepath-container" style="text-align: center; margin-top: 10px;">
+        <p>Correct Answer: <span id="correct_answer"></span></p>
+    </div>
+
+    <script>
+        let currentImage = ""; // To keep track of the current image
+        let randomBorderPressed = false; // The "Show Answer" button can only be pressed if this is True
+
+        function showRandomImage() {
+            // List of image file names
+            const images = ['images/Asia/Iran and Iraq border.jpg', 'images/Asia/China and Myanmar border.jpg', 'images/Asia/Israel and Syria border.jpg', 'images/Asia/Akrotiri and Dhekelia and Northern Cyprus border.jpg', 'images/Asia/Georgia and Turkey border.jpg', 'images/Asia/Kazakhstan and Kyrgyzstan border.jpg', 'images/Asia/Afghanistan and Tajikistan border.jpg', 'images/Asia/Saudi Arabia and Yemen border.jpg', 'images/Asia/Afghanistan and China border.jpg', 'images/Asia/Akrotiri and Dhekelia and Cyprus border.jpg', 'images/Asia/Israel and Lebanon border.jpg', 'images/Asia/China and Mongolia border.jpg', 'images/Asia/Afghanistan and Turkmenistan border.jpg', 'images/Asia/Tajikistan and Uzbekistan border.jpg', 'images/Asia/Cyprus and Northern Cyprus border.jpg', 'images/Asia/Iran and Turkmenistan border.jpg', 'images/Asia/Saudi Arabia and United Arab Emirates border.jpg', 'images/Asia/Jordan and Syria border.jpg', 'images/Asia/Lebanon and Syria border.jpg', 'images/Asia/China and North Korea border.jpg', 'images/Asia/Myanmar and Thailand border.jpg', 'images/Asia/Qatar and Saudi Arabia border.jpg', 'images/Asia/Azerbaijan and Iran border.jpg', 'images/Asia/China and Pakistan border.jpg', 'images/Asia/Iraq and Jordan border.jpg', 'images/Asia/Egypt and Israel border.jpg', 'images/Asia/North Korea and South Korea border.jpg', 'images/Asia/Oman and United Arab Emirates border.jpg', 'images/Asia/China and Vietnam border.jpg', 'images/Asia/Armenia and Georgia border.jpg', 'images/Asia/Mongolia and Russia border.jpg', 'images/Asia/India and Nepal border.jpg', 'images/Asia/Kyrgyzstan and Tajikistan border.jpg', 'images/Asia/Jordan and Saudi Arabia border.jpg', 'images/Asia/Malaysia and Thailand border.jpg', 'images/Asia/Bangladesh and Myanmar border.jpg', 'images/Asia/China and Bhutan border.jpg', 'images/Asia/China and Laos border.jpg', 'images/Asia/Iraq and Turkey border.jpg', 'images/Asia/Oman and Saudi Arabia border.jpg', 'images/Asia/China and Russia border.jpg', 'images/Asia/Israel and Palestine border.jpg', 'images/Asia/Caspian Sea and Iran border.jpg', 'images/Asia/Turkmenistan and Uzbekistan border.jpg', 'images/Asia/Laos and Myanmar border.jpg', 'images/Asia/Armenia and Azerbaijan border.jpg', 'images/Asia/China and Nepal border.jpg', 'images/Asia/Indonesia and Timor-Leste border.jpg', 'images/Asia/Cambodia and Laos border.jpg', 'images/Asia/China and Kyrgyzstan border.jpg', 'images/Asia/Afghanistan and Iran border.jpg', 'images/Asia/Kazakhstan and Uzbekistan border.jpg', 'images/Asia/Kyrgyzstan and Uzbekistan border.jpg', 'images/Asia/Caspian Sea and Turkmenistan border.jpg', 'images/Asia/India and Myanmar border.jpg', 'images/Asia/Israel and Jordan border.jpg', 'images/Asia/Indonesia and Malaysia border.jpg', 'images/Asia/Cambodia and Vietnam border.jpg', 'images/Asia/Kuwait and Saudi Arabia border.jpg', 'images/Asia/Syria and Turkey border.jpg', 'images/Asia/Iraq and Saudi Arabia border.jpg', 'images/Asia/India and Bhutan border.jpg', 'images/Asia/Laos and Vietnam border.jpg', 'images/Asia/Pakistan and Iran border.jpg', 'images/Asia/Afghanistan and Uzbekistan border.jpg', 'images/Asia/Iraq and Kuwait border.jpg', 'images/Asia/Jordan and Palestine border.jpg', 'images/Asia/China and India border.jpg', 'images/Asia/China and Tajikistan border.jpg', 'images/Asia/Armenia and Turkey border.jpg', 'images/Asia/Caspian Sea and Kazakhstan border.jpg', 'images/Asia/China and Kazakhstan border.jpg', 'images/Asia/Azerbaijan and Georgia border.jpg', 'images/Asia/Azerbaijan and Caspian Sea border.jpg', 'images/Asia/India and Bangladesh border.jpg', 'images/Asia/Laos and Thailand border.jpg', 'images/Asia/Armenia and Iran border.jpg', 'images/Asia/India and Pakistan border.jpg', 'images/Asia/Iraq and Syria border.jpg', 'images/Asia/Oman and Yemen border.jpg', 'images/Asia/Afghanistan and Pakistan border.jpg', 'images/Asia/Kazakhstan and Turkmenistan border.jpg', 'images/Asia/Kazakhstan and Russia border.jpg', 'images/Asia/Cambodia and Thailand border.jpg', 'images/Asia/Brunei and Malaysia border.jpg', 'images/Asia/Iran and Turkey border.jpg']
+
+            // Get a random index from the array
+            const randomIndex = Math.floor(Math.random() * images.length);
+
+            // Select the image based on the random index
+            const randomImage = images[randomIndex];
+
+            // Set the source of the img element to the selected random image
+            document.getElementById('displayed-image').src = randomImage;
+
+            // Store the selected image as the current image
+            currentImage = randomImage;
+
+            // Display the filepath
+            document.getElementById('correct_answer').textContent = '';
+
+            randomBorderPressed = true;
+        }
+
+        function replaceCurrentImage() {
+            // Ensure there's a current image rendered first
+            if (!randomBorderPressed) {
+                alert("Please show a random border first!");
+                return;
+            }
+
+            // Given the randomly selected border image, get the filepath of the countries rendered with the border
+
+            // Step 1: Split the file path into the base name and the extension
+            const extension = currentImage.split('.').pop();  // Get the file extension (e.g., "jpg")
+            const basePath = currentImage.substring(0, currentImage.lastIndexOf('.'));  // Get everything before the extension
+
+            // Step 2: Split the base path by spaces to isolate the last word
+            const words = basePath.split(' ');
+
+            // Step 3: Remove the last word
+            words.pop();
+
+            // Step 4: Join the remaining words back together with spaces
+            const newBasePath = words.join(' ');
+
+            // Step 5: Reattach the extension to the new base path
+            const newImage = `${newBasePath}.${extension}`;
+
+            // Set the new image path as the source of the img element
+            document.getElementById('displayed-image').src = newImage;
+
+            // Update the current image tracker
+            currentImage = newImage;
+
+            // Get the correct regions to display as text
+            const regions = newBasePath.split('/')
+            regions.shift()  // pop the first element
+            regions.shift()
+            const regions_solution = regions.join(' ')
+
+            // Display the filepath of the new image
+            document.getElementById('correct_answer').textContent = regions_solution;
+
+            randomBorderPressed = false;
+        }
+    </script>
+
+</body>
+</html>
